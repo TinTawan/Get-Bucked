@@ -133,7 +133,8 @@ GameObject:
   - component: {fileID: 51930474}
   - component: {fileID: 51930473}
   - component: {fileID: 51930472}
-  m_Layer: 0
+  - component: {fileID: 51930475}
+  m_Layer: 7
   m_Name: Player_root_spine1 (config joint)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,9 +205,112 @@ Transform:
   - {fileID: 1050751896}
   - {fileID: 1232350012}
   - {fileID: 328362833}
+  - {fileID: 337681353}
   - {fileID: 1260388500}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!153 &51930475
+ConfigurableJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51930471}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Axis: {x: 1, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_XMotion: 2
+  m_YMotion: 2
+  m_ZMotion: 2
+  m_AngularXMotion: 2
+  m_AngularYMotion: 2
+  m_AngularZMotion: 2
+  m_LinearLimitSpring:
+    spring: 0
+    damper: 0
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularXLimitSpring:
+    spring: 0
+    damper: 0
+  m_LowAngularXLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_HighAngularXLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularYZLimitSpring:
+    spring: 0
+    damper: 0
+  m_AngularYLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularZLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 4
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_YDrive:
+    serializedVersion: 4
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_ZDrive:
+    serializedVersion: 4
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 4
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_AngularYZDrive:
+    serializedVersion: 4
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_SlerpDrive:
+    serializedVersion: 4
+    positionSpring: 750
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_ProjectionMode: 0
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 180
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &138915374
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +417,7 @@ GameObject:
   - component: {fileID: 328362832}
   - component: {fileID: 328362830}
   - component: {fileID: 328362831}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hip.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +538,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
+    positionSpring: 750
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
@@ -593,6 +697,206 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &337681352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 337681353}
+  - component: {fileID: 337681356}
+  - component: {fileID: 337681355}
+  - component: {fileID: 337681354}
+  - component: {fileID: 337681357}
+  m_Layer: 6
+  m_Name: Stabiliser
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &337681353
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337681352}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 51930474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!153 &337681354
+ConfigurableJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337681352}
+  m_ConnectedBody: {fileID: 51930472}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Axis: {x: 1, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0.0011072236, y: 0.3109159, z: -0.008059859}
+  serializedVersion: 3
+  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_XMotion: 2
+  m_YMotion: 2
+  m_ZMotion: 2
+  m_AngularXMotion: 2
+  m_AngularYMotion: 2
+  m_AngularZMotion: 2
+  m_LinearLimitSpring:
+    spring: 0
+    damper: 0
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularXLimitSpring:
+    spring: 0
+    damper: 0
+  m_LowAngularXLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_HighAngularXLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularYZLimitSpring:
+    spring: 0
+    damper: 0
+  m_AngularYLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularZLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 4
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_YDrive:
+    serializedVersion: 4
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_ZDrive:
+    serializedVersion: 4
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 4
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_AngularYZDrive:
+    serializedVersion: 4
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_SlerpDrive:
+    serializedVersion: 4
+    positionSpring: 1000
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+    useAcceleration: 0
+  m_ProjectionMode: 0
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 180
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!54 &337681355
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337681352}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &337681356
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337681352}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.0017519624
+  m_Center: {x: 0, y: -0.0013098697, z: 3.5649516e-15}
+--- !u!114 &337681357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337681352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c28a34ed38fddfb4e81a14f47945e5a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootrb: {fileID: 51930472}
+  activateForce: 0
+  forceVal: 20000
 --- !u!144 &407409761
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -872,7 +1176,7 @@ GameObject:
   - component: {fileID: 574882944}
   - component: {fileID: 574882943}
   - component: {fileID: 574882942}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lower_arm.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -982,7 +1286,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
+    positionSpring: 750
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
@@ -1485,7 +1789,7 @@ GameObject:
   - component: {fileID: 1050751895}
   - component: {fileID: 1050751893}
   - component: {fileID: 1050751894}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1606,7 +1910,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
+    positionSpring: 750
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
@@ -1768,7 +2072,7 @@ GameObject:
   - component: {fileID: 1232350011}
   - component: {fileID: 1232350009}
   - component: {fileID: 1232350010}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hip.l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1889,7 +2193,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
+    positionSpring: 750
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
@@ -2480,7 +2784,7 @@ GameObject:
   - component: {fileID: 1378018427}
   - component: {fileID: 1378018426}
   - component: {fileID: 1378018425}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lower_leg.l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2590,7 +2894,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
+    positionSpring: 750
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
@@ -2652,9 +2956,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.0004249455
-  m_Height: 0.001901257
+  m_Height: 0.0020967305
   m_Direction: 1
-  m_Center: {x: 0.0000010798408, y: 0.00058384426, z: -2.5753726e-11}
+  m_Center: {x: 0.0000010798325, y: 0.0004861081, z: -9.6787335e-12}
 --- !u!1 &1384604068
 GameObject:
   m_ObjectHideFlags: 0
@@ -2880,7 +3184,7 @@ GameObject:
   - component: {fileID: 1466983074}
   - component: {fileID: 1466983072}
   - component: {fileID: 1466983073}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: upper_arm.l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3001,7 +3305,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
+    positionSpring: 750
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
@@ -3067,7 +3371,7 @@ GameObject:
   - component: {fileID: 1484639309}
   - component: {fileID: 1484639308}
   - component: {fileID: 1484639307}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lower_leg.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3102,7 +3406,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0.00006824789, y: 0.0016295596, z: -0.0012799595}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -3177,7 +3481,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
+    positionSpring: 750
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
@@ -3239,9 +3543,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.00042732083
-  m_Height: 0.0019285434
+  m_Height: 0.0021309406
   m_Direction: 1
-  m_Center: {x: 0.0000010798739, y: 0.0005633524, z: -0.00007144862}
+  m_Center: {x: 0.0000010798675, y: 0.00046215687, z: -0.00007144869}
 --- !u!1 &1535578646
 GameObject:
   m_ObjectHideFlags: 0
@@ -3254,7 +3558,7 @@ GameObject:
   - component: {fileID: 1535578650}
   - component: {fileID: 1535578649}
   - component: {fileID: 1535578648}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lower_arm.l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3364,7 +3668,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
+    positionSpring: 750
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
@@ -3662,7 +3966,7 @@ GameObject:
   - component: {fileID: 1762399705}
   - component: {fileID: 1762399704}
   - component: {fileID: 1762399703}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3773,7 +4077,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
+    positionSpring: 750
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
@@ -3848,7 +4152,7 @@ GameObject:
   - component: {fileID: 1835519633}
   - component: {fileID: 1835519631}
   - component: {fileID: 1835519632}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: upper_arm.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3969,7 +4273,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
+    positionSpring: 750
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
