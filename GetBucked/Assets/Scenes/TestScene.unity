@@ -134,8 +134,9 @@ GameObject:
   - component: {fileID: 51930476}
   - component: {fileID: 51930472}
   - component: {fileID: 51930475}
+  - component: {fileID: 51930477}
   m_Layer: 7
-  m_Name: Player_root_spine1 (config joint)
+  m_Name: Player_root_spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,7 +151,7 @@ Rigidbody:
   m_GameObject: {fileID: 51930471}
   serializedVersion: 4
   m_Mass: 9.375
-  m_Drag: 0
+  m_Drag: 35
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -165,7 +166,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!4 &51930474
@@ -200,7 +201,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0.0011072236, y: 0.3109159, z: -0.008059859}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 2
@@ -313,6 +314,19 @@ CapsuleCollider:
   m_Height: 0.0031624418
   m_Direction: 0
   m_Center: {x: -0.0000072747453, y: 0.0014121697, z: -0.000049987582}
+--- !u!114 &51930477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51930471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6096f5cec9b4344eb0cdbf635509cac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
 --- !u!1 &138915374
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,7 +479,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0, y: -0.0025000002, z: 0}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -574,10 +588,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.00035327577
-  m_Height: 0.0015811607
+  m_Radius: 0.00044986274
+  m_Height: 0.0015811606
   m_Direction: 1
-  m_Center: {x: 0.000095579264, y: 0.001018655, z: -0.00031083284}
+  m_Center: {x: 0.00009557927, y: 0.001018655, z: -0.00021424588}
 --- !u!4 &328362833
 Transform:
   m_ObjectHideFlags: 0
@@ -679,13 +693,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.06726066, y: -0, z: -0, w: 0.99773544}
+  m_LocalPosition: {x: 0, y: 1.86, z: -4.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 7.713, y: 0, z: 0}
 --- !u!1 &337681352
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,7 +747,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0011072236, y: 0.3109159, z: -0.008059859}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 2
@@ -886,8 +900,9 @@ MonoBehaviour:
   rootrb: {fileID: 51930472}
   activateForce: 1
   activateRagdoll: 0
-  forceVal: 22500
+  stabiliserForceVal: 1500
   slerpDriveMin: 50
+  slerpDriveBase: 4000
 --- !u!144 &407409761
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -1189,7 +1204,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: -0.0000000010477379, y: 0.0031589346, z: -1.8644641e-11}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1769,7 +1784,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0, y: 0.0025000002, z: 0}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1878,8 +1893,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0022858507, y: 0.0021079078, z: 0.0017660188}
-  m_Center: {x: 1.4901158e-10, y: 0.0013503782, z: -0.00003214106}
+  m_Size: {x: 0.0022858507, y: 0.0023676532, z: 0.0017660188}
+  m_Center: {x: 1.4901158e-10, y: 0.001480251, z: -0.00003214106}
 --- !u!4 &1050751896
 Transform:
   m_ObjectHideFlags: 0
@@ -2052,7 +2067,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0, y: -0.0025000002, z: 0}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -2161,10 +2176,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0003664662
-  m_Height: 0.0015811607
+  m_Radius: 0.000461236
+  m_Height: 0.0015811606
   m_Direction: 1
-  m_Center: {x: -0.00011040333, y: 0.001018655, z: -0.00031083263}
+  m_Center: {x: -0.00011040335, y: 0.0010186549, z: -0.00021606285}
 --- !u!4 &1232350012
 Transform:
   m_ObjectHideFlags: 0
@@ -2753,7 +2768,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: -0.0000682479, y: 0.0016295598, z: -0.0012799598}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -2905,7 +2920,7 @@ GameObject:
   - component: {fileID: 1384604071}
   - component: {fileID: 1384604070}
   - component: {fileID: 1384604069}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: testground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3164,7 +3179,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0.0012464562, y: 0.0022235385, z: -0.000017591288}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -3527,7 +3542,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0.0000000013387762, y: 0.0031589356, z: -1.8189894e-12}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -4132,7 +4147,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: -0.0012464562, y: 0.0022235385, z: -0.000017591274}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -5208,6 +5223,7 @@ GameObject:
   - component: {fileID: 1641985156019330300}
   - component: {fileID: 2003072709}
   - component: {fileID: 2003072708}
+  - component: {fileID: 5669454412474520019}
   m_Layer: 0
   m_Name: Player_root_spine1 (char joint)
   m_TagString: Untagged
@@ -5215,6 +5231,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!95 &5669454412474520019
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5669454412474520018}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3593462f5b545be4ea2281f6d8a01fde, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5808967653858593545
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,22 +7,20 @@ public class RagdollStabiliser : MonoBehaviour
     [SerializeField] private Rigidbody rootrb;
 
     [SerializeField] bool activateForce = true, activateRagdoll = false;
-    [SerializeField] float forceVal = 2f, slerpDriveMin = 100f;
+    [SerializeField] float stabiliserForceVal = 2f, slerpDriveMin = 100f, slerpDriveBase = 4000f;
 
     List<ConfigurableJoint> joints = new();
-    float slerpDriveVal;
 
     private void Start()
     {
         AddAllJoints();
-        slerpDriveVal = joints[0].slerpDrive.positionSpring;
     }
 
     private void FixedUpdate()
     {
         if (activateForce)
         {
-            rootrb.AddForce(Vector3.up * forceVal, ForceMode.Force);
+            rootrb.AddForce(Vector3.up * stabiliserForceVal, ForceMode.Force);
 
         }
         Ragdoll();
@@ -56,7 +54,7 @@ public class RagdollStabiliser : MonoBehaviour
             foreach (ConfigurableJoint j in joints)
             {
                 JointDrive drive = j.slerpDrive;
-                drive.positionSpring = slerpDriveVal;
+                drive.positionSpring = slerpDriveBase;
 
                 j.slerpDrive = drive;
             }
