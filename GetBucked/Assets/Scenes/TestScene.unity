@@ -151,7 +151,7 @@ Rigidbody:
   m_GameObject: {fileID: 51930471}
   serializedVersion: 4
   m_Mass: 9.375
-  m_Drag: 35
+  m_Drag: 25
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -326,7 +326,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6096f5cec9b4344eb0cdbf635509cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 4
+  jumpForce: 500
+  minDrag: 0
+  isGrounded: 0
 --- !u!1 &138915374
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,12 +882,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.0017519624
-  m_Center: {x: 0, y: -0.0013098697, z: 3.5649516e-15}
+  m_Radius: 0.0018823019
+  m_Center: {x: 0, y: -0.0016548214, z: -1.8897305e-15}
 --- !u!114 &337681357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -900,9 +903,12 @@ MonoBehaviour:
   rootrb: {fileID: 51930472}
   activateForce: 1
   activateRagdoll: 0
-  stabiliserForceVal: 1500
+  stabiliserForceVal: 850
   slerpDriveMin: 50
   slerpDriveBase: 4000
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!144 &407409761
 CharacterJoint:
   m_ObjectHideFlags: 0

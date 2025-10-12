@@ -11,6 +11,9 @@ public class RagdollStabiliser : MonoBehaviour
 
     List<ConfigurableJoint> joints = new();
 
+    bool isGrounded;
+    [SerializeField] LayerMask groundLayer;
+
     private void Start()
     {
         AddAllJoints();
@@ -60,4 +63,32 @@ public class RagdollStabiliser : MonoBehaviour
             }
         }
     }
+
+    public bool GetRagdollState()
+    {
+        return activateRagdoll;
+    }
+    public bool IsGrounded()
+    {
+        return isGrounded;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((groundLayer.value & (1 << other.gameObject.layer)) > 0)
+        {
+            isGrounded = true;
+            activateForce = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if ((groundLayer.value & (1 << other.gameObject.layer)) > 0)
+        {
+            isGrounded = false;
+            activateForce = false;
+        }
+    }
+
+
 }
