@@ -6,8 +6,11 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     PlayerControls playerControls;
+    Rigidbody rb;
 
-    Vector2 moveInput;
+    Vector3 moveDirection;
+
+    [SerializeField] float moveSpeed = 2f;
 
     private void OnEnable()
     {
@@ -15,12 +18,15 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        
+        if(moveDirection != Vector3.zero)
+        {
+            rb.velocity = moveDirection * moveSpeed;
+        }
     }
 
     void EnableGeneralControls()
@@ -33,7 +39,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move_performed(InputAction.CallbackContext ctx)
     {
-        moveInput = ctx.ReadValue<Vector2>();
+        Vector2 moveInput = ctx.ReadValue<Vector2>();
+        moveDirection = new(moveInput.x, 0, moveInput.y);
     }
 
 

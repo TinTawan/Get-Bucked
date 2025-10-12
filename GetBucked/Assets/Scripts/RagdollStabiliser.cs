@@ -22,7 +22,7 @@ public class RagdollStabiliser : MonoBehaviour
     {
         if (activateForce)
         {
-            rootrb.AddForce(Vector3.up * forceVal * Time.deltaTime);
+            rootrb.AddForce(Vector3.up * forceVal, ForceMode.Force);
 
         }
         Ragdoll();
