@@ -326,10 +326,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6096f5cec9b4344eb0cdbf635509cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  jumpForce: 500
-  minDrag: 0
-  isGrounded: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  groundCheckDist: 0.4
+  moveSpeed: 750
+  jumpForce: 400
+  ragdoll: 0
+  slerpDriveMax: 4000
+  slerpDriveMin: 75
 --- !u!1 &138915374
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +887,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -900,15 +905,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c28a34ed38fddfb4e81a14f47945e5a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootrb: {fileID: 51930472}
+  rootRB: {fileID: 51930472}
   activateForce: 1
-  activateRagdoll: 0
-  stabiliserForceVal: 850
-  slerpDriveMin: 50
-  slerpDriveBase: 4000
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  forceVal: 850
 --- !u!144 &407409761
 CharacterJoint:
   m_ObjectHideFlags: 0

@@ -4,91 +4,33 @@ using UnityEngine;
 
 public class RagdollStabiliser : MonoBehaviour
 {
-    [SerializeField] private Rigidbody rootrb;
+    [SerializeField] private Rigidbody rootRB;
 
-    [SerializeField] bool activateForce = true, activateRagdoll = false;
-    [SerializeField] float stabiliserForceVal = 2f, slerpDriveMin = 100f, slerpDriveBase = 4000f;
-
-    List<ConfigurableJoint> joints = new();
-
-    bool isGrounded;
-    [SerializeField] LayerMask groundLayer;
+    [SerializeField] bool activateForce;
+    [SerializeField] float forceVal = 2f;
 
     private void Start()
     {
-        AddAllJoints();
+        activateForce = true;
     }
 
     private void FixedUpdate()
     {
         if (activateForce)
         {
-            rootrb.AddForce(Vector3.up * stabiliserForceVal, ForceMode.Force);
+            rootRB.AddForce(Vector3.up * forceVal, ForceMode.Force);
 
         }
-        Ragdoll();
     }
 
-    void AddAllJoints()
+    public void SetActivateForce(bool inBool)
     {
-        ConfigurableJoint[] allJoints = rootrb.GetComponentsInChildren<ConfigurableJoint>();
-        foreach (ConfigurableJoint j in allJoints)
-        {
-            joints.Add(j);
-        }
+        activateForce = inBool;
     }
 
-    void Ragdoll()
+    /*public void SetForceVal(float inVal)
     {
-        if (activateRagdoll)
-        {
-            activateForce = false;
-            foreach (ConfigurableJoint j in joints)
-            {
-                JointDrive drive = j.slerpDrive;
-                drive.positionSpring = slerpDriveMin;
-
-                j.slerpDrive = drive;
-            }
-        }
-        else
-        {
-            
-            foreach (ConfigurableJoint j in joints)
-            {
-                JointDrive drive = j.slerpDrive;
-                drive.positionSpring = slerpDriveBase;
-
-                j.slerpDrive = drive;
-            }
-        }
-    }
-
-    public bool GetRagdollState()
-    {
-        return activateRagdoll;
-    }
-    public bool IsGrounded()
-    {
-        return isGrounded;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if ((groundLayer.value & (1 << other.gameObject.layer)) > 0)
-        {
-            isGrounded = true;
-            activateForce = true;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if ((groundLayer.value & (1 << other.gameObject.layer)) > 0)
-        {
-            isGrounded = false;
-            activateForce = false;
-        }
-    }
-
+        forceVal = inVal;
+    }*/
 
 }
