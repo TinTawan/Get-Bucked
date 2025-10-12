@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Joints")]
     [SerializeField] bool ragdoll = false;
-    [SerializeField] float slerpDriveMax = 4000f, slerpDriveMin = 75f, moveForceVal = 850f, stillForceVal = 750f;
+    [SerializeField] float slerpDriveMax = 4000f, slerpDriveMin = 75f, artificialGravity = -100f;
     ConfigurableJoint[] bodyJoints;
 
 
@@ -91,11 +91,6 @@ public class PlayerMovement : MonoBehaviour
 
             rb.AddForce(dir * moveSpeed, ForceMode.Force);
 
-            stabiliser.SetForceVal(moveForceVal);
-        }
-        else
-        {
-            stabiliser.SetForceVal(stillForceVal);
         }
     }
 
@@ -106,14 +101,14 @@ public class PlayerMovement : MonoBehaviour
             if (Physics.Raycast(transform.position, Vector3.down, out _, groundCheckDist, groundLayer))
             {
                 isGrounded = true;
-                stabiliser.SetActivateForce(true);
 
+                stabiliser.SetForceVal(stabiliser.GetInitForce());
             }
             else
             {
                 isGrounded = false;
-                stabiliser.SetActivateForce(false);
 
+                stabiliser.SetForceVal(artificialGravity);
             }
             Vector3 end = new(transform.position.x, transform.position.y - groundCheckDist, transform.position.z);
             Debug.DrawLine(transform.position, end, Color.red);

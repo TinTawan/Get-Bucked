@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public class RagdollStabiliser : MonoBehaviour
@@ -7,12 +8,13 @@ public class RagdollStabiliser : MonoBehaviour
     [SerializeField] private Rigidbody rootRB;
 
     [SerializeField] bool activateForce;
-    [SerializeField] float dragStrength = 10f;
-    float forceVal = 2f;
+    [SerializeField] float artificalDrag = 10f, upwardForce = 450f;
+    float stabilisingForce;
 
     private void Start()
     {
         activateForce = true;
+        stabilisingForce = upwardForce;
     }
 
     private void FixedUpdate()
@@ -20,11 +22,11 @@ public class RagdollStabiliser : MonoBehaviour
         if (activateForce)
         {
             //upwards stabilising force
-            rootRB.AddForce(Vector3.up * forceVal, ForceMode.Force);
+            rootRB.AddForce(Vector3.up * upwardForce, ForceMode.Force);
 
             //horizontal drag to reduce sway 
             Vector3 swayDrag = new(rootRB.velocity.x, 0f, rootRB.velocity.z);
-            rootRB.AddForce(-swayDrag * dragStrength, ForceMode.Force);
+            rootRB.AddForce(-swayDrag * artificalDrag, ForceMode.Force);
         }
     }
 
@@ -35,7 +37,11 @@ public class RagdollStabiliser : MonoBehaviour
 
     public void SetForceVal(float inVal)
     {
-        forceVal = inVal;
+        upwardForce = inVal;
     }
 
+    public float GetInitForce()
+    {
+        return stabilisingForce;
+    }
 }
