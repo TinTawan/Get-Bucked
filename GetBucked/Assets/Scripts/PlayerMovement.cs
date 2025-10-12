@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,49 +8,40 @@ public class PlayerMovement : MonoBehaviour
 {
     PlayerControls playerControls;
     Rigidbody rb;
+    Transform cam;
+    ConfigurableJoint rootJoint;
     RagdollStabiliser stabiliser;
 
-    Vector3 moveDirection;
-
-    [Header("Movement")]
-    [SerializeField] float moveSpeed = 2f;
-    [SerializeField] float jumpForce = 2f;
-    float initDrag;
-    [SerializeField] float minDrag = 0f;
-
     [Header("Ground Check")]
-    [SerializeField] bool isGrounded;
-    /*[SerializeField] float groundCheckRadius = 2f;
-    [SerializeField] float groundCheckMaxLength = 2f;
-    [SerializeField] LayerMask groundLayer;*/
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float groundCheckDist;
+    bool isGrounded;
 
-    private void OnEnable()
-    {
-        EnableGeneralControls();
-    }
-    void Start()
+    Vector2 moveVect;
+    [Header("Locomotion")]
+    [SerializeField] float moveSpeed = 1f;
+    [SerializeField] float jumpForce = 1f;
+
+    [Header("Joints")]
+    [SerializeField] bool ragdoll = false;
+    [SerializeField] float slerpDriveMax = 4000f, slerpDriveMin = 75f;
+    ConfigurableJoint[] bodyJoints;
+
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        rootJoint = GetComponent<ConfigurableJoint>();
         stabiliser = GetComponentInChildren<RagdollStabiliser>();
+        bodyJoints = GetComponentsInChildren<ConfigurableJoint>();
 
-        initDrag = rb.drag;
+        cam = Camera.main.transform;
+
+        ragdoll = false;
     }
 
-    private void Update()
-    {
-        //GroundedCheck();
-        isGrounded = stabiliser.IsGrounded();
-    }
 
-    void FixedUpdate()
-    {
-        if(moveDirection != Vector3.zero)
-        {
-            rb.velocity = moveDirection * moveSpeed;
-        }
-    }
-
-    void EnableGeneralControls()
+    private void OnEnable()
     {
         playerControls = new();
         playerControls.General.Enable();
@@ -60,57 +52,102 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump_performed(InputAction.CallbackContext ctx)
     {
-        if (isGrounded && !stabiliser.GetRagdollState())
+        if (isGrounded && !ragdoll)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
         }
     }
 
     private void Move_performed(InputAction.CallbackContext ctx)
     {
-        if (!stabiliser.GetRagdollState())
+        if (!ragdoll)
         {
-            Vector2 moveInput = ctx.ReadValue<Vector2>();
-            moveDirection = new(moveInput.x, 0, moveInput.y);
+            moveVect = ctx.ReadValue<Vector2>();
         }
-        
     }
 
-
-
-    /*void GroundedCheck()
+    private void Update()
     {
-        Vector3 groundCheckPos = new(transform.position.x, transform.position.y + groundCheckMaxLength, transform.position.z);
-        isGrounded = !Physics.SphereCast(groundCheckPos, groundCheckRadius, Vector3.down, out RaycastHit hit, 2f, groundLayer);
+        GroundCheck();
+    }
+    private void FixedUpdate()
+    {
+        Move();
 
-        if (isGrounded)
+        PlayerRagdoll(ragdoll);
+    }
+
+    void Move()
+    {
+        Vector3 dir = (cam.forward.normalized * moveVect.y) + (cam.right.normalized * moveVect.x);
+
+        if (moveVect != Vector2.zero)
         {
-            stabiliser.SetStabiliserForce(true);
-            rb.drag = initDrag;
+            Quaternion rot = Quaternion.Euler(0, cam.eulerAngles.y, 0);
+            Quaternion inv = Quaternion.Inverse(rot);
+
+            rootJoint.targetRotation = inv;
+
+            rb.AddForce(dir * moveSpeed, ForceMode.Force);
+
+        }
+    }
+
+    void GroundCheck()
+    {
+        if (!ragdoll)
+        {
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit lineHit, groundCheckDist, groundLayer))
+            {
+                isGrounded = true;
+                stabiliser.SetActivateForce(true);
+            }
+            else
+            {
+                isGrounded = false;
+                stabiliser.SetActivateForce(false);
+            }
+            Vector3 end = new(transform.position.x, transform.position.y - groundCheckDist, transform.position.z);
+            Debug.DrawLine(transform.position, end, Color.red);
+        }
+    }
+
+    void PlayerRagdoll(bool isRagdoll)
+    {
+        if (isRagdoll)
+        {
+            stabiliser.SetActivateForce(false);
+            SetSlerpDrive(slerpDriveMin);
+
         }
         else
         {
-            stabiliser.SetStabiliserForce(false);
-            rb.drag = minDrag;
+            stabiliser.SetActivateForce(true);
+            SetSlerpDrive(slerpDriveMax);
 
         }
-    }*/
 
+    }
 
-    void DisableGeneralControls()
+    public void SetPlayerRagdoll(bool inBool)
     {
-        playerControls.General.Disable();
+        ragdoll = inBool;
+    }
+
+    void SetSlerpDrive(float inVal)
+    {
+        foreach (ConfigurableJoint cj in bodyJoints)
+        {
+            JointDrive drive = cj.slerpDrive;
+            drive.positionSpring = inVal;
+            cj.slerpDrive = drive;
+
+        }
+
     }
 
     private void OnDisable()
     {
-        DisableGeneralControls();
-    }
-
-    private void OnDrawGizmos()
-    {
-        //Vector3 groundCheckPos = new(transform.position.x, transform.position.y + groundCheckMaxLength, transform.position.z);
-        //Gizmos.DrawWireSphere(groundCheckPos, groundCheckRadius);
+        playerControls.General.Disable();
     }
 }
