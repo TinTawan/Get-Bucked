@@ -127,6 +127,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8cf5eb1-9058-483a-b084-1d9936aaf322"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -248,6 +257,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Ragdoll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b74b0dc2-0bf4-41bd-9405-aae9c2795c4e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4e14485-1698-4d95-a2a6-c2ea90e43b81"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Controller"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -766,6 +797,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_General_Look = m_General.FindAction("Look", throwIfNotFound: true);
         m_General_Jump = m_General.FindAction("Jump", throwIfNotFound: true);
         m_General_Ragdoll = m_General.FindAction("Ragdoll", throwIfNotFound: true);
+        m_General_Attack = m_General.FindAction("Attack", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -861,6 +893,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_General_Look;
     private readonly InputAction m_General_Jump;
     private readonly InputAction m_General_Ragdoll;
+    private readonly InputAction m_General_Attack;
     /// <summary>
     /// Provides access to input actions defined in input action map "General".
     /// </summary>
@@ -888,6 +921,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "General/Ragdoll".
         /// </summary>
         public InputAction @Ragdoll => m_Wrapper.m_General_Ragdoll;
+        /// <summary>
+        /// Provides access to the underlying input action "General/Attack".
+        /// </summary>
+        public InputAction @Attack => m_Wrapper.m_General_Attack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -926,6 +963,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Ragdoll.started += instance.OnRagdoll;
             @Ragdoll.performed += instance.OnRagdoll;
             @Ragdoll.canceled += instance.OnRagdoll;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         /// <summary>
@@ -949,6 +989,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Ragdoll.started -= instance.OnRagdoll;
             @Ragdoll.performed -= instance.OnRagdoll;
             @Ragdoll.canceled -= instance.OnRagdoll;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         /// <summary>
@@ -1216,6 +1259,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRagdoll(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
