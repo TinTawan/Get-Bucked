@@ -7,10 +7,11 @@ public class PlayerAttack : MonoBehaviour
 {
     PlayerControls playerControls;
 
-    [SerializeField] float attackDmg = 5f/*, attackRange = 2f, attackDuration = 1f*/;
+    [SerializeField] float attackDmg = 5f, attackCooldown = 1f;
     [SerializeField] LayerMask playerLayer;
 
-    //bool isAttacking = false;
+    bool canAttack = false;
+    float attackTimer = 0f;
 
     TestEnemy enemy;
 
@@ -24,30 +25,32 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack_performed(InputAction.CallbackContext ctx)
     {
-        Debug.Log("attack");
-        //isAttacking = true;
-
-        if(enemy != null)
+        if (canAttack)
         {
-            Attack();
-        }
+            canAttack = false;
+            Debug.Log("attack");
+
+            if (enemy != null)
+            {
+                Attack();
+            }
+        }       
+    }
+
+    private void Update()
+    {
+        AttackCooldown();
     }
 
     private void OnTriggerStay(Collider col)
     {
         if (col.CompareTag("Enemy"))
         {
-            Debug.Log("Enemy in range");
-            /*if(col.TryGetComponent(out TestEnemy enemy))
+            if(enemy == null)
             {
-
-                Debug.Log("Hit enemy");
-                enemy.SetRagdoll(true);
-                Rigidbody enemyRB = enemy.GetComponent<Rigidbody>();
-                enemyRB.AddForce(CalculateAttack(attackDmg));
-            }*/
-
-            enemy = col.TryGetComponent(out TestEnemy testEnemy) ? testEnemy : null;
+                Debug.Log("Enemy in range");
+                enemy = col.TryGetComponent(out TestEnemy testEnemy) ? testEnemy : null;
+            }
 
         }
     }
@@ -56,6 +59,23 @@ public class PlayerAttack : MonoBehaviour
         if (col.CompareTag("Enemy"))
         {
             enemy = null;
+        }
+    }
+
+    void AttackCooldown()
+    {
+        if (!canAttack)
+        {
+            if (attackTimer > 0)
+            {
+                attackTimer -= Time.deltaTime;
+                canAttack = false;
+            }
+            else
+            {
+                canAttack = true;
+                attackTimer = attackCooldown;
+            }
         }
     }
 
