@@ -27,8 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float slerpDriveMax = 4000f, slerpDriveMin = 75f, artificialGravity = -100f;
     ConfigurableJoint[] bodyJoints;
 
-
-    private void Awake()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rootJoint = GetComponent<ConfigurableJoint>();
@@ -38,9 +37,7 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main.transform;
 
         ragdoll = false;
-
     }
-
 
     private void OnEnable()
     {
@@ -90,7 +87,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        Vector3 dir = (cam.forward.normalized * moveVect.y) + (cam.right.normalized * moveVect.x);
+        //makes move direction face in the actual forward direction rather than the camera's forward
+        //which points down toward the player
+        Vector3 camForward = cam.forward;
+        camForward.y = 0;
+        camForward.Normalize();
+        Vector3 camRight = cam.right;
+        camRight.y = 0;
+        camRight.Normalize();
+
+        Vector3 dir = (camForward * moveVect.y) + (camRight * moveVect.x);
+        Debug.DrawLine(cam.position, cam.position + dir * 5f, Color.yellow);
 
         if (moveVect != Vector2.zero)
         {
