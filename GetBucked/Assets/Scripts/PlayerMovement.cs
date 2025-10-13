@@ -49,6 +49,16 @@ public class PlayerMovement : MonoBehaviour
 
         playerControls.General.Move.performed += Move_performed;
         playerControls.General.Jump.performed += Jump_performed;
+
+        //debug
+        playerControls.General.Ragdoll.performed += Ragdoll_performed;
+        //
+    }
+
+    private void Ragdoll_performed(InputAction.CallbackContext ctx)
+    {
+        ragdoll = !ragdoll;
+        moveVect = Vector2.zero;
     }
 
     private void Jump_performed(InputAction.CallbackContext ctx)
