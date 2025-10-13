@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class PlayerAttack : MonoBehaviour
     float attackTimer = 0f;
 
     TestEnemy enemy;
+
+    public static event Action<PlayerAttack> OnPlayerAttack;
 
     private void OnEnable()
     {
@@ -81,8 +84,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
-        enemy.SetRagdoll(true);
-        enemy.GetRagdollStabiliser().SetActivateForce(false);
+        OnPlayerAttack?.Invoke(this);
 
         enemy.GetComponent<Rigidbody>().AddForce(CalculateAttack(attackDmg), ForceMode.Impulse);
     }
