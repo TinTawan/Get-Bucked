@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ground Check")]
     [SerializeField] LayerMask groundLayer;
-    [SerializeField] float groundCheckDist;
+    [SerializeField] float groundCheckDist, sphereCheckRadius = 2f, sphereCheckDist = 1f;
     bool isGrounded;
 
     Vector2 moveVect;
@@ -115,7 +115,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!ragdoll)
         {
-            if (Physics.Raycast(transform.position, Vector3.down, out _, groundCheckDist, groundLayer))
+            Vector3 sphereCastPos = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist, stabiliser.transform.position.z);
+            if (Physics.CheckSphere(sphereCastPos, sphereCheckRadius, groundLayer))
             {
                 isGrounded = true;
 
@@ -127,8 +128,7 @@ public class PlayerMovement : MonoBehaviour
 
                 stabiliser.SetForceVal(artificialGravity);
             }
-            Vector3 end = new(transform.position.x, transform.position.y - groundCheckDist, transform.position.z);
-            Debug.DrawLine(transform.position, end, Color.red);
+          
         }
     }
 
@@ -170,4 +170,13 @@ public class PlayerMovement : MonoBehaviour
     {
         playerControls.General.Disable();
     }
+
+    /*private void OnDrawGizmos()
+    {
+        Vector3 castEnd = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist, stabiliser.transform.position.z);
+
+        //Gizmos.DrawWireSphere(stabiliser.transform.position, sphereCheckRadius);
+        Gizmos.DrawWireSphere(castEnd, sphereCheckRadius);
+
+    }*/
 }
