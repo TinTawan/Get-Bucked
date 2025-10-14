@@ -8,7 +8,7 @@ public class PlayerAttack : MonoBehaviour
 {
     PlayerControls playerControls;
 
-    [SerializeField] float attackDmg = 5f, attackCooldown = 1f;
+    [SerializeField] float attackKnockback = 5f, attackCooldown = 1f;
     [SerializeField] LayerMask playerLayer;
 
     bool canAttack = false;
@@ -86,7 +86,7 @@ public class PlayerAttack : MonoBehaviour
     {
         OnPlayerAttack?.Invoke(this);
 
-        enemy.GetComponent<Rigidbody>().AddForce(CalculateAttack(attackDmg), ForceMode.Impulse);
+        enemy.GetComponent<Rigidbody>().AddForce(CalculateAttack(attackKnockback), ForceMode.Impulse);
     }
 
     Vector3 CalculateAttack(float damage)
