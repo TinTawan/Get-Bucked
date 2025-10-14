@@ -18,6 +18,9 @@ public class PlayerAttack : MonoBehaviour
 
     public static event Action<PlayerAttack> OnPlayerAttack;
 
+    [SerializeField] GameObject hitEffect, chargeHitEffect;
+    [SerializeField] ParticleSystem chargeUpEffect;
+
     private void OnEnable()
     {
         playerControls = new();
@@ -48,12 +51,15 @@ public class PlayerAttack : MonoBehaviour
 
         }
 
+        chargeUpEffect.Stop();
     }
 
     private void ChargeAttack_performed(InputAction.CallbackContext ctx)
     {
         chargingAttack = true;
         Debug.Log("Hold charge");
+
+        chargeUpEffect.Play();
     }
 
     void ChargeUpAttack()
@@ -76,7 +82,7 @@ public class PlayerAttack : MonoBehaviour
     }
     void PerformChargeAttack(float chargeMult)
     {
-        Attack(attackKnockback * chargeMult);
+        Attack(attackKnockback * chargeMult, 1);
 
         chargeLevel = 1;
         chargingAttack = false;
@@ -91,7 +97,7 @@ public class PlayerAttack : MonoBehaviour
 
             if (enemy != null)
             {
-                Attack(attackKnockback);
+                Attack(attackKnockback, 0);
             }
         }       
     }
@@ -139,11 +145,19 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    void Attack(float knockback)
+    void Attack(float knockback, int type)
     {
         OnPlayerAttack?.Invoke(this);
 
         enemy.GetComponent<Rigidbody>().AddForce(CalculateAttack(knockback), ForceMode.Impulse);
+        if(type == 0)
+        {
+            Instantiate(hitEffect, enemy.transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(chargeHitEffect, enemy.transform.position, Quaternion.identity);
+        }
     }
 
     Vector3 CalculateAttack(float damage)
