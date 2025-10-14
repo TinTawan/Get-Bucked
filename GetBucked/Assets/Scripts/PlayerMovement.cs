@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ground Check")]
     [SerializeField] LayerMask groundLayer;
-    [SerializeField] float groundCheckDist, sphereCheckRadius = 2f, sphereCheckDist = 1f;
+    [SerializeField] float sphereCheckRadius_bottom = 2f, sphereCheckDist_bottom = 1f, sphereCheckRadius_top, sphereCheckDist_top;
     bool isGrounded;
 
     Vector2 moveVect;
@@ -117,8 +117,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!ragdoll)
         {
-            Vector3 sphereCastPos = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist, stabiliser.transform.position.z);
-            if (Physics.CheckSphere(sphereCastPos, sphereCheckRadius, groundLayer))
+            Vector3 sphereCastTop = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_top, stabiliser.transform.position.z);
+            Vector3 sphereCastBottom = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_bottom, stabiliser.transform.position.z);
+            if (Physics.CheckSphere(sphereCastTop, sphereCheckRadius_top, groundLayer) ||
+                Physics.CheckSphere(sphereCastBottom, sphereCheckRadius_bottom, groundLayer))
             {
                 isGrounded = true;
 
@@ -173,12 +175,14 @@ public class PlayerMovement : MonoBehaviour
         playerControls.General.Disable();
     }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
-        Vector3 castEnd = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist, stabiliser.transform.position.z);
+        Vector3 sphereCastTop = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_bottom, stabiliser.transform.position.z);
+        Gizmos.DrawWireSphere(sphereCastTop, sphereCheckRadius_bottom);
 
-        //Gizmos.DrawWireSphere(stabiliser.transform.position, sphereCheckRadius);
-        Gizmos.DrawWireSphere(castEnd, sphereCheckRadius);
+        Vector3 sphereCastBottom = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_top, stabiliser.transform.position.z);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(sphereCastBottom, sphereCheckRadius_top);
 
-    }*/
+    }
 }
