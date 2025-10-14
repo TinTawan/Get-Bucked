@@ -49,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
 
         //debug
         playerControls.General.Ragdoll.performed += Ragdoll_performed;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         //
     }
 
