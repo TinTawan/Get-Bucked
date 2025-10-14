@@ -177,12 +177,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector3 sphereCastTop = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_bottom, stabiliser.transform.position.z);
-        Gizmos.DrawWireSphere(sphereCastTop, sphereCheckRadius_bottom);
+        if(stabiliser != null)
+        {
+            Vector3 sphereCastTop = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_bottom, stabiliser.transform.position.z);
+            Gizmos.DrawWireSphere(sphereCastTop, sphereCheckRadius_bottom);
 
-        Vector3 sphereCastBottom = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_top, stabiliser.transform.position.z);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(sphereCastBottom, sphereCheckRadius_top);
+            Vector3 sphereCastBottom = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_top, stabiliser.transform.position.z);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(sphereCastBottom, sphereCheckRadius_top);
+        }
+        
 
     }
 }
