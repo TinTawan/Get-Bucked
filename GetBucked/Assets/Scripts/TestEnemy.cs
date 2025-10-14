@@ -14,6 +14,9 @@ public class TestEnemy : MonoBehaviour
     [SerializeField] int baseHealth = 3;
     ConfigurableJoint[] bodyJoints;
 
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float groundCheckDist = 2f;
+
     int health;
      
     private void OnEnable()
@@ -52,6 +55,10 @@ public class TestEnemy : MonoBehaviour
     {
         EnemyRagdoll(ragdoll);
     }
+    private void Update()
+    {
+        GroundCheck();
+    }
 
     void EnemyRagdoll(bool isRagdoll)
     {
@@ -78,6 +85,24 @@ public class TestEnemy : MonoBehaviour
 
         }
 
+    }
+
+    void GroundCheck()
+    {
+        Debug.DrawLine(stabiliser.transform.position, 
+            new(stabiliser.transform.position.x, stabiliser.transform.position.y - groundCheckDist, stabiliser.transform.position.z), 
+            Color.yellow);
+        if (!ragdoll)
+        {
+            if (Physics.Raycast(stabiliser.transform.position, Vector3.down, out _, groundCheckDist, groundLayer))
+            {
+                stabiliser.SetActivateForce(true);
+            }
+            else
+            {
+                stabiliser.SetActivateForce(false);
+            }
+        }
     }
 
     IEnumerator ResetRagdoll()
