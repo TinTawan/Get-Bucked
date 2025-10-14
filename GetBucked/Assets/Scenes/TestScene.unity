@@ -418,10 +418,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0011377502
-  m_Height: 0.0031624418
+  m_Radius: 0.0010977831
+  m_Height: 0.0031624427
   m_Direction: 0
-  m_Center: {x: -0.0000072747453, y: 0.0014121697, z: -0.000049987582}
+  m_Center: {x: -0.0000072747453, y: 0.0015377133, z: -0.00005152538}
 --- !u!114 &51930477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,10 +437,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  sphereCheckRadius_bottom: 0.085
-  sphereCheckDist_bottom: 0.27
-  sphereCheckRadius_top: 0.095
-  sphereCheckDist_top: 0.09
+  bSphereCheckRadius: 0.085
+  bSphereCheckDist: 0.27
+  tSphereCheckRadius: 0.095
+  tSphereCheckDist: 0.09
   moveSpeed: 550
   jumpForce: 175
   ragdoll: 0
@@ -1352,7 +1352,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298269364}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10321068, y: 0.0000000074107924, z: -7.689796e-10, w: 0.9946596}
+  m_LocalRotation: {x: 0.10321069, y: -0.00000002314468, z: 0.000000002401604, w: 0.99465954}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3510,7 +3510,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852735434}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16018225, y: -0.000000009349977, z: 0.0000000015172921, w: 0.9870875}
+  m_LocalRotation: {x: 0.16018225, y: -8.721587e-16, z: -1.7312205e-16, w: 0.9870875}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3963,7 +3963,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911614277}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16018225, y: 0.000000029417503, z: -0.0000000047738036, w: 0.9870875}
+  m_LocalRotation: {x: 0.16018225, y: 0, z: 0, w: 0.9870875}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

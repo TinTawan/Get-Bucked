@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ground Check")]
     [SerializeField] LayerMask groundLayer;
-    [SerializeField] float sphereCheckRadius_bottom = 2f, sphereCheckDist_bottom = 1f, sphereCheckRadius_top, sphereCheckDist_top;
+    [SerializeField] float bSphereCheckRadius = 2f, bSphereCheckDist = 1f, tSphereCheckRadius, tSphereCheckDist;
     bool isGrounded;
 
     Vector2 moveVect;
@@ -117,10 +117,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!ragdoll)
         {
-            Vector3 sphereCastTop = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_top, stabiliser.transform.position.z);
-            Vector3 sphereCastBottom = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_bottom, stabiliser.transform.position.z);
-            if (Physics.CheckSphere(sphereCastTop, sphereCheckRadius_top, groundLayer) ||
-                Physics.CheckSphere(sphereCastBottom, sphereCheckRadius_bottom, groundLayer))
+            //uses 2 sphere casts incase the ragdoll leans forward too much
+            Vector3 sphereCastTop = new(stabiliser.transform.position.x, stabiliser.transform.position.y - tSphereCheckDist, stabiliser.transform.position.z);
+            Vector3 sphereCastBottom = new(stabiliser.transform.position.x, stabiliser.transform.position.y - bSphereCheckDist, stabiliser.transform.position.z);
+            if (Physics.CheckSphere(sphereCastTop, tSphereCheckRadius, groundLayer) ||
+                Physics.CheckSphere(sphereCastBottom, bSphereCheckRadius, groundLayer))
             {
                 isGrounded = true;
 
@@ -175,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
         playerControls.General.Disable();
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         if(stabiliser != null)
         {
@@ -188,5 +189,5 @@ public class PlayerMovement : MonoBehaviour
         }
         
 
-    }
+    }*/
 }
