@@ -136,6 +136,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChargeAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""a69e0f26-3414-490b-9893-0348b6c33e0a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -279,6 +288,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Controller"",
                     ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""65a13be2-5ff5-4693-bd97-ad471177f1f6"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ChargeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""233b890b-79cd-467b-9ed5-3724e8cee781"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Controller"",
+                    ""action"": ""ChargeAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -798,6 +829,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_General_Jump = m_General.FindAction("Jump", throwIfNotFound: true);
         m_General_Ragdoll = m_General.FindAction("Ragdoll", throwIfNotFound: true);
         m_General_Attack = m_General.FindAction("Attack", throwIfNotFound: true);
+        m_General_ChargeAttack = m_General.FindAction("ChargeAttack", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -894,6 +926,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_General_Jump;
     private readonly InputAction m_General_Ragdoll;
     private readonly InputAction m_General_Attack;
+    private readonly InputAction m_General_ChargeAttack;
     /// <summary>
     /// Provides access to input actions defined in input action map "General".
     /// </summary>
@@ -925,6 +958,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "General/Attack".
         /// </summary>
         public InputAction @Attack => m_Wrapper.m_General_Attack;
+        /// <summary>
+        /// Provides access to the underlying input action "General/ChargeAttack".
+        /// </summary>
+        public InputAction @ChargeAttack => m_Wrapper.m_General_ChargeAttack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -966,6 +1003,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @ChargeAttack.started += instance.OnChargeAttack;
+            @ChargeAttack.performed += instance.OnChargeAttack;
+            @ChargeAttack.canceled += instance.OnChargeAttack;
         }
 
         /// <summary>
@@ -992,6 +1032,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @ChargeAttack.started -= instance.OnChargeAttack;
+            @ChargeAttack.performed -= instance.OnChargeAttack;
+            @ChargeAttack.canceled -= instance.OnChargeAttack;
         }
 
         /// <summary>
@@ -1266,6 +1309,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChargeAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChargeAttack(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

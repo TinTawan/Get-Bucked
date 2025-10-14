@@ -50,6 +50,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ChargeAttack",
+                    "type": "Button",
+                    "id": "a69e0f26-3414-490b-9893-0348b6c33e0a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -193,6 +202,28 @@
                     "processors": "",
                     "groups": ";Controller",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "65a13be2-5ff5-4693-bd97-ad471177f1f6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ChargeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "233b890b-79cd-467b-9ed5-3724e8cee781",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Controller",
+                    "action": "ChargeAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

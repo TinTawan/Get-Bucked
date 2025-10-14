@@ -8,11 +8,11 @@ public class PlayerAttack : MonoBehaviour
 {
     PlayerControls playerControls;
 
-    [SerializeField] float attackKnockback = 5f, attackCooldown = 1f;
+    [SerializeField] float attackKnockback = 5f, attackCooldown = 1f, chargeMult = 2f, maxChargeLevel = 5f;
     [SerializeField] LayerMask playerLayer;
 
-    bool canAttack = false;
-    float attackTimer = 0f;
+    bool canAttack = false, /*canChargeAttack,*/ chargingAttack;
+    float attackCooldownTimer = 0f, chargeLevel = 1f;
 
     TestEnemy enemy;
 
@@ -24,6 +24,62 @@ public class PlayerAttack : MonoBehaviour
         playerControls.Enable();
 
         playerControls.General.Attack.performed += Attack_performed;
+        playerControls.General.ChargeAttack.performed += ChargeAttack_performed;
+        playerControls.General.ChargeAttack.canceled += ChargeAttack_canceled;
+
+    }
+
+    private void ChargeAttack_canceled(InputAction.CallbackContext ctx)
+    {
+        //chargingAttack = false;
+        if(enemy != null)
+        {
+            if (chargingAttack)
+            {
+                PerformChargeAttack(Mathf.Lerp(1, maxChargeLevel, chargeLevel) * chargeMult);
+                Debug.Log($"Attack knockback: {Mathf.Lerp(1, maxChargeLevel, chargeLevel) * chargeMult}");
+            }
+        }
+        else
+        {
+            chargeLevel = 1f;
+            chargingAttack = false;
+            Debug.Log("Charge released");
+
+        }
+
+    }
+
+    private void ChargeAttack_performed(InputAction.CallbackContext ctx)
+    {
+        chargingAttack = true;
+        Debug.Log("Hold charge");
+    }
+
+    void ChargeUpAttack()
+    {
+        if (chargingAttack)
+        {
+            if(chargeLevel < maxChargeLevel)
+            {
+                chargeLevel += Time.deltaTime;
+                Debug.Log("Charging");
+
+            }
+            else
+            {
+                chargeLevel = maxChargeLevel;
+                Debug.Log("Max Charge");
+
+            }
+        }
+    }
+    void PerformChargeAttack(float chargeMult)
+    {
+        Attack(attackKnockback * chargeMult);
+
+        chargeLevel = 1;
+        chargingAttack = false;
     }
 
     private void Attack_performed(InputAction.CallbackContext ctx)
@@ -35,7 +91,7 @@ public class PlayerAttack : MonoBehaviour
 
             if (enemy != null)
             {
-                Attack();
+                Attack(attackKnockback);
             }
         }       
     }
@@ -43,6 +99,7 @@ public class PlayerAttack : MonoBehaviour
     private void Update()
     {
         AttackCooldown();
+        ChargeUpAttack();
     }
 
     private void OnTriggerStay(Collider col)
@@ -69,24 +126,24 @@ public class PlayerAttack : MonoBehaviour
     {
         if (!canAttack)
         {
-            if (attackTimer > 0)
+            if (attackCooldownTimer > 0)
             {
-                attackTimer -= Time.deltaTime;
+                attackCooldownTimer -= Time.deltaTime;
                 canAttack = false;
             }
             else
             {
                 canAttack = true;
-                attackTimer = attackCooldown;
+                attackCooldownTimer = attackCooldown;
             }
         }
     }
 
-    void Attack()
+    void Attack(float knockback)
     {
         OnPlayerAttack?.Invoke(this);
 
-        enemy.GetComponent<Rigidbody>().AddForce(CalculateAttack(attackKnockback), ForceMode.Impulse);
+        enemy.GetComponent<Rigidbody>().AddForce(CalculateAttack(knockback), ForceMode.Impulse);
     }
 
     Vector3 CalculateAttack(float damage)
@@ -107,4 +164,9 @@ public class PlayerAttack : MonoBehaviour
         Vector3 size = attackRange * Vector3.one;
         Gizmos.DrawCube(castCenter, size);
     }*/
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
+    }
 }
