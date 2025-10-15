@@ -33,7 +33,7 @@ public class TestEnemy : MonoBehaviour
         }
         else
         {
-            Debug.Log("Enemy Ragdoll");
+            //Debug.Log("Enemy Ragdoll");
             SetRagdoll(true);
             stabiliser.SetActivateForce(false);
 
@@ -109,11 +109,11 @@ public class TestEnemy : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(wakeUpTimeMin, wakeUpTimeMax));
         SetRagdoll(false);
-        Debug.Log("Enemy roke up");
+        //Debug.Log("Enemy roke up");
 
         yield return new WaitForSeconds(1f);
         stabiliser.SetActivateForce(true);
-        Debug.Log("Enemy stabiliser on");
+        //Debug.Log("Enemy stabiliser on");
 
         health = baseHealth;
 

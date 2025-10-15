@@ -1464,7 +1464,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298269364}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1032107, y: 0.000000029643168, z: -0.0000000030759189, w: 0.99465954}
+  m_LocalRotation: {x: 0.103210695, y: 0.000000029643168, z: -0.0000000030759186,
+    w: 0.99465954}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3941,7 +3942,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852735434}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16018222, y: -0.000000006092565, z: 9.88687e-10, w: 0.9870875}
+  m_LocalRotation: {x: 0.16018225, y: -0.000000012185128, z: 0.000000001977374, w: 0.9870875}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4394,8 +4395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911614277}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16018222, y: 0.0000000147087516, z: -0.0000000023869016,
-    w: 0.9870875}
+  m_LocalRotation: {x: 0.16018225, y: 0, z: 0, w: 0.9870875}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8394,21 +8394,21 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
+          value: 0.1
+          inSlope: 2.531344
+          outSlope: 2.531344
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
+          outWeight: 0.04444444
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 0
-          outSlope: 0
+          inSlope: 0.016536737
+          outSlope: 0.016536737
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.12839514
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2

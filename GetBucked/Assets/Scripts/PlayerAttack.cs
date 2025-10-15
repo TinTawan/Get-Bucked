@@ -27,6 +27,7 @@ public class PlayerAttack : MonoBehaviour
         playerControls.Enable();
 
         playerControls.General.Attack.performed += Attack_performed;
+        playerControls.General.ChargeAttack.started += ctx => chargeLevel = 1f;
         playerControls.General.ChargeAttack.performed += ChargeAttack_performed;
         playerControls.General.ChargeAttack.canceled += ChargeAttack_canceled;
 
@@ -39,13 +40,13 @@ public class PlayerAttack : MonoBehaviour
         {
             if (chargingAttack)
             {
-                PerformChargeAttack(Mathf.Lerp(1, maxChargeLevel, chargeLevel) * chargeMult);
-                Debug.Log($"Attack knockback: {Mathf.Lerp(1, maxChargeLevel, chargeLevel) * chargeMult}");
+                PerformChargeAttack(Mathf.Lerp(1, maxChargeLevel, chargeLevel / maxChargeLevel) * chargeMult);
+                Debug.Log($"Attack knockback: {Mathf.Lerp(1, maxChargeLevel, chargeLevel / maxChargeLevel) * chargeMult}");
             }
         }
         else
         {
-            chargeLevel = 1f;
+            //chargeLevel = 1f;
             chargingAttack = false;
             Debug.Log("Charge released");
 
@@ -84,7 +85,7 @@ public class PlayerAttack : MonoBehaviour
     {
         Attack(attackKnockback * chargeMult, 1);
 
-        chargeLevel = 1;
+        //chargeLevel = 1;
         chargingAttack = false;
     }
 
