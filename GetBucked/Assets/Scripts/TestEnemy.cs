@@ -26,19 +26,23 @@ public class TestEnemy : MonoBehaviour
 
     private void PlayerAttack_OnPlayerAttack(PlayerAttack ctx)
     {
-        if(health > 1)
+        //only apply if player isnt already knocked out
+        if (!ragdoll)
         {
+            //decrement health
             health--;
             Debug.Log($"Enemy has {health} health left");
-        }
-        else
-        {
-            //Debug.Log("Enemy Ragdoll");
-            SetRagdoll(true);
-            stabiliser.SetActivateForce(false);
 
-            StartCoroutine(ResetRagdoll());
+            //if 0, ragdoll for x seconds
+            if (health <= 0)
+            {
+                SetRagdoll(true);
+                stabiliser.SetActivateForce(false);
+
+                StartCoroutine(ResetRagdoll());
+            }
         }
+                
                 
     }
 
@@ -109,13 +113,13 @@ public class TestEnemy : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(wakeUpTimeMin, wakeUpTimeMax));
         SetRagdoll(false);
+        health = baseHealth;
         //Debug.Log("Enemy roke up");
 
         yield return new WaitForSeconds(1f);
         stabiliser.SetActivateForce(true);
         //Debug.Log("Enemy stabiliser on");
 
-        health = baseHealth;
 
     }
 
