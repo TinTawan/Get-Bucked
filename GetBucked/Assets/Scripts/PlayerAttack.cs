@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System;
+using UnityEditor;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] float attackKnockback = 5f, attackCooldown = 1f, chargeMult = 2f, maxChargeLevel = 5f;
     [SerializeField] LayerMask playerLayer;
 
-    bool canAttack = false, /*canChargeAttack,*/ chargingAttack;
+    bool canAttack = false, chargingAttack;
     float attackCooldownTimer = 0f, chargeLevel = 1f;
 
     TestEnemy enemy;
@@ -19,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
     public static event Action<PlayerAttack> OnPlayerAttack;
 
     [SerializeField] GameObject hitEffect, chargeHitEffect;
-    [SerializeField] ParticleSystem chargeUpEffect;
+    [SerializeField] ParticleSystem chargeUpEffect, chargeHeldEffect;
 
     private void OnEnable()
     {
@@ -32,6 +33,7 @@ public class PlayerAttack : MonoBehaviour
         playerControls.General.ChargeAttack.canceled += ChargeAttack_canceled;
 
     }
+
 
     private void ChargeAttack_canceled(InputAction.CallbackContext ctx)
     {
@@ -46,21 +48,29 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            //chargeLevel = 1f;
             chargingAttack = false;
             Debug.Log("Charge released");
 
         }
 
-        chargeUpEffect.Stop();
+        if (chargeUpEffect.isPlaying)
+        {
+            chargeUpEffect.Clear();
+            chargeUpEffect.Stop();
+        }
+        if (chargeHeldEffect.isPlaying)
+        {
+            chargeHeldEffect.Clear();
+            chargeHeldEffect.Stop();
+        }
+
     }
 
     private void ChargeAttack_performed(InputAction.CallbackContext ctx)
     {
         chargingAttack = true;
-        Debug.Log("Hold charge");
 
-        chargeUpEffect.Play();
+        if (!chargeUpEffect.isPlaying) chargeUpEffect.Play();
     }
 
     void ChargeUpAttack()
@@ -70,14 +80,14 @@ public class PlayerAttack : MonoBehaviour
             if(chargeLevel < maxChargeLevel)
             {
                 chargeLevel += Time.deltaTime;
-                Debug.Log("Charging");
 
             }
             else
             {
                 chargeLevel = maxChargeLevel;
-                Debug.Log("Max Charge");
 
+                if (!chargeHeldEffect.isPlaying) chargeHeldEffect.Play();
+                
             }
         }
     }
@@ -85,7 +95,6 @@ public class PlayerAttack : MonoBehaviour
     {
         Attack(attackKnockback * chargeMult, 1);
 
-        //chargeLevel = 1;
         chargingAttack = false;
     }
 
@@ -107,6 +116,7 @@ public class PlayerAttack : MonoBehaviour
     {
         AttackCooldown();
         ChargeUpAttack();
+
     }
 
     private void OnTriggerStay(Collider col)
@@ -157,7 +167,7 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            Instantiate(chargeHitEffect, enemy.transform.position, Quaternion.identity);
+            Instantiate(chargeHitEffect, chargeUpEffect.transform.position, Quaternion.identity);
         }
     }
 
