@@ -39,6 +39,10 @@ public class RagdollStabiliser : MonoBehaviour
     {
         upwardForce = inVal;
     }
+    public float GetForceVal()
+    {
+        return upwardForce;
+    }
 
     public float GetInitForce()
     {

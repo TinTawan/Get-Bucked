@@ -15,7 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float bSphereCheckRadius = 2f, bSphereCheckDist = 1f, tSphereCheckRadius, tSphereCheckDist;
-    bool isGrounded;
+    [SerializeField] float stabiliserRestoreDuration = 1f, stabiliserRestoreMoveThreshold = 0.25f;
+    bool isGrounded, wasGrounded;
+    Coroutine restoreStabiliserRoutine;
 
     Vector2 moveVect;
     [Header("Locomotion")]
@@ -78,12 +80,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        GroundCheck();
+        
+
     }
     private void FixedUpdate()
     {
         Move();
+        GroundCheck();
 
+        ApplyStabiliserForces();
         PlayerRagdoll(ragdoll);
     }
 
@@ -117,6 +122,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!ragdoll)
         {
+            wasGrounded = isGrounded;
+
             //uses 2 sphere casts incase the ragdoll leans forward too much
             Vector3 sphereCastTop = new(stabiliser.transform.position.x, stabiliser.transform.position.y - tSphereCheckDist, stabiliser.transform.position.z);
             Vector3 sphereCastBottom = new(stabiliser.transform.position.x, stabiliser.transform.position.y - bSphereCheckDist, stabiliser.transform.position.z);
@@ -124,17 +131,57 @@ public class PlayerMovement : MonoBehaviour
                 Physics.CheckSphere(sphereCastBottom, bSphereCheckRadius, groundLayer))
             {
                 isGrounded = true;
-
-                stabiliser.SetForceVal(stabiliser.GetInitForce());
             }
             else
             {
                 isGrounded = false;
-
-                stabiliser.SetForceVal(artificialGravity);
             }
           
         }
+    }
+
+    void ApplyStabiliserForces()
+    {
+        if (!isGrounded)
+        {
+            //when jumping, set artifial gravity and stop the restore stabiliser coroutine
+            if(restoreStabiliserRoutine != null)
+            {
+                StopCoroutine(restoreStabiliserRoutine);
+            }
+            stabiliser.SetForceVal(artificialGravity);
+        }
+        else
+        {
+            if(!wasGrounded && isGrounded)
+            {
+                //when landing, restore stabiliser graudally if low movement and restore fully if moving fast
+                if (moveVect.magnitude < stabiliserRestoreMoveThreshold)
+                {
+                    restoreStabiliserRoutine = StartCoroutine(RestoreStabiliserForce(stabiliserRestoreDuration));
+                }
+                else
+                {
+                    stabiliser.SetForceVal(stabiliser.GetInitForce());
+                }
+
+                rb.velocity = new(rb.velocity.x, 0f, rb.velocity.z);
+            }
+        }
+    }
+    private IEnumerator RestoreStabiliserForce(float duration)
+    {
+        float forceVal = stabiliser.GetForceVal();
+        float timer = 0f;
+
+        while (timer  < duration)
+        {
+            timer += Time.fixedDeltaTime;
+            stabiliser.SetForceVal(Mathf.Lerp(forceVal, stabiliser.GetInitForce(), timer / duration));
+            yield return new WaitForFixedUpdate();
+        }
+
+        stabiliser.SetForceVal(stabiliser.GetInitForce());
     }
 
     void PlayerRagdoll(bool isRagdoll)
