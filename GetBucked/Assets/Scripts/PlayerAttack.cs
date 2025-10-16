@@ -20,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
     public static event Action<PlayerAttack> OnPlayerAttack;
 
     [SerializeField] GameObject hitEffect, chargeHitEffect;
-    [SerializeField] ParticleSystem chargeUpEffect, chargeHeldEffect;
+    [SerializeField] ParticleSystem chargeUpEffect, chargeHeldEffect, inRangeEffect;
 
     private void OnEnable()
     {
@@ -37,7 +37,6 @@ public class PlayerAttack : MonoBehaviour
 
     private void ChargeAttack_canceled(InputAction.CallbackContext ctx)
     {
-        //chargingAttack = false;
         if(enemy != null)
         {
             if (chargingAttack)
@@ -125,8 +124,9 @@ public class PlayerAttack : MonoBehaviour
         {
             if(enemy == null)
             {
-                Debug.Log("Enemy in range");
                 enemy = col.TryGetComponent(out TestEnemy testEnemy) ? testEnemy : null;
+
+                inRangeEffect.Play();
             }
 
         }
@@ -136,6 +136,8 @@ public class PlayerAttack : MonoBehaviour
         if (col.CompareTag("Enemy"))
         {
             enemy = null;
+
+            inRangeEffect.Stop();
         }
     }
 
