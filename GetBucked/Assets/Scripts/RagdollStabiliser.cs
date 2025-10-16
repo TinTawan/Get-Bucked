@@ -9,12 +9,13 @@ public class RagdollStabiliser : MonoBehaviour
 
     [SerializeField] bool activateForce;
     [SerializeField] float artificalDrag = 10f, upwardForce = 450f;
-    float stabilisingForce;
+    float stabilisingForce, initDrag;
 
     private void Start()
     {
         activateForce = true;
         stabilisingForce = upwardForce;
+        initDrag = artificalDrag;
     }
 
     private void FixedUpdate()
@@ -39,6 +40,12 @@ public class RagdollStabiliser : MonoBehaviour
     {
         upwardForce = inVal;
     }
+
+    public void SetArtficialDrag(float inVal)
+    {
+        artificalDrag = inVal;
+    }
+
     public float GetForceVal()
     {
         return upwardForce;
@@ -47,5 +54,9 @@ public class RagdollStabiliser : MonoBehaviour
     public float GetInitForce()
     {
         return stabilisingForce;
+    }
+    public float GetInitDrag()
+    {
+        return initDrag;
     }
 }

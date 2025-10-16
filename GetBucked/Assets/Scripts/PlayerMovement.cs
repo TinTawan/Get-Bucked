@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
+using UnityEditor.ShaderKeywordFilter;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     Transform cam;
     ConfigurableJoint rootJoint;
     RagdollStabiliser stabiliser;
+    CinemachineFreeLook cineCam;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask groundLayer;
@@ -21,8 +24,11 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 moveVect;
     [Header("Locomotion")]
-    [SerializeField] float moveSpeed = 1f;
     [SerializeField] float jumpForce = 1f;
+    [SerializeField] float moveSpeed = 1f, runSpeedMult = 0.5f, fovDeltaSpeed = 1f;
+    float initMoveSpeed, initFov, runFov;
+    bool isRunning;
+    Coroutine moveFOVCoroutine, runFOVCoroutine;
 
     [Header("Joints")]
     [SerializeField] bool ragdoll = false;
@@ -36,9 +42,13 @@ public class PlayerMovement : MonoBehaviour
         stabiliser = GetComponentInChildren<RagdollStabiliser>();
         bodyJoints = GetComponentsInChildren<ConfigurableJoint>();
 
+        cineCam = FindObjectOfType<CinemachineFreeLook>();
         cam = Camera.main.transform;
 
         ragdoll = false;
+        initMoveSpeed = moveSpeed;
+        initFov = cineCam.m_Lens.FieldOfView;
+        runFov = initFov + 10;
     }
 
     private void OnEnable()
@@ -47,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
         playerControls.General.Enable();
 
         playerControls.General.Move.performed += Move_performed;
+        playerControls.General.Run.started += Run_started;
+        playerControls.General.Run.canceled += Run_cancelled;
         playerControls.General.Jump.performed += Jump_performed;
 
         //debug
@@ -61,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
         ragdoll = !ragdoll;
         moveVect = Vector2.zero;
     }
-
     private void Jump_performed(InputAction.CallbackContext ctx)
     {
         if (isGrounded && !ragdoll)
@@ -69,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
-
     private void Move_performed(InputAction.CallbackContext ctx)
     {
         if (!ragdoll)
@@ -77,10 +87,68 @@ public class PlayerMovement : MonoBehaviour
             moveVect = ctx.ReadValue<Vector2>();
         }
     }
+    private void Run_started(InputAction.CallbackContext ctx)
+    {
+        if (moveVect != Vector2.zero)
+        {
+            isRunning = true;
+        }
+
+    }
+    private void Run_cancelled(InputAction.CallbackContext ctx)
+    {
+        if (moveVect != Vector2.zero)
+        {
+            isRunning = false;
+        }
+    }
+
+    void FOVChange()
+    {
+        if (isRunning)
+        {
+            runFOVCoroutine = StartCoroutine(RunFOV(runFov));
+            if (moveFOVCoroutine != null)
+            {
+                StopCoroutine(moveFOVCoroutine);
+            }
+        }
+        else
+        {
+            moveFOVCoroutine = StartCoroutine(WalkFOV(initFov));
+            if (runFOVCoroutine != null)
+            {
+                StopCoroutine(runFOVCoroutine);
+            }
+        }
+
+    }
+
+    IEnumerator RunFOV(float newFOV)
+    {
+        while (cineCam.m_Lens.FieldOfView < newFOV)
+        {
+            cineCam.m_Lens.FieldOfView = Mathf.Lerp(cineCam.m_Lens.FieldOfView, newFOV, fovDeltaSpeed);
+            yield return new WaitForEndOfFrame();
+        }
+
+        cineCam.m_Lens.FieldOfView = newFOV;
+
+    }
+    IEnumerator WalkFOV(float newFOV)
+    {
+        while (cineCam.m_Lens.FieldOfView > newFOV)
+        {
+            cineCam.m_Lens.FieldOfView = Mathf.Lerp(cineCam.m_Lens.FieldOfView, newFOV, fovDeltaSpeed);
+            yield return new WaitForEndOfFrame();
+        }
+
+        cineCam.m_Lens.FieldOfView = newFOV;
+    }
 
     private void Update()
     {
-        
+        FOVChange();
 
     }
     private void FixedUpdate()
@@ -113,7 +181,8 @@ public class PlayerMovement : MonoBehaviour
 
             rootJoint.targetRotation = inv;
 
-            rb.AddForce(dir * moveSpeed, ForceMode.Force);
+            float speed = isRunning ? moveSpeed * runSpeedMult : moveSpeed;
+            rb.AddForce(dir * speed, ForceMode.Force);
 
         }
     }

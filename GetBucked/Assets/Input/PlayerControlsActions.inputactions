@@ -59,6 +59,15 @@
                     "processors": "",
                     "interactions": "Hold(duration=0.2)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "b3448fc4-74d7-45cc-8751-7eedd24e757a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -175,10 +184,21 @@
                 {
                     "name": "",
                     "id": "14b844ce-2f54-4a94-b732-12ee73c4d713",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "Ragdoll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae497d47-2509-427a-b085-968865007304",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Controller",
                     "action": "Ragdoll",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -224,6 +244,28 @@
                     "processors": "",
                     "groups": ";Controller",
                     "action": "ChargeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3045ae30-f084-4c0a-9975-2867395eca11",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5e8e724b-7e5f-4ef1-9f20-63a76c0f893b",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Controller",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

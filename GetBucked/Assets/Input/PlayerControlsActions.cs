@@ -145,6 +145,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=0.2)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""b3448fc4-74d7-45cc-8751-7eedd24e757a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -261,10 +270,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""14b844ce-2f54-4a94-b732-12ee73c4d713"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""Ragdoll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae497d47-2509-427a-b085-968865007304"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Controller"",
                     ""action"": ""Ragdoll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -310,6 +330,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Controller"",
                     ""action"": ""ChargeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3045ae30-f084-4c0a-9975-2867395eca11"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e8e724b-7e5f-4ef1-9f20-63a76c0f893b"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Controller"",
+                    ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -830,6 +872,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_General_Ragdoll = m_General.FindAction("Ragdoll", throwIfNotFound: true);
         m_General_Attack = m_General.FindAction("Attack", throwIfNotFound: true);
         m_General_ChargeAttack = m_General.FindAction("ChargeAttack", throwIfNotFound: true);
+        m_General_Run = m_General.FindAction("Run", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -927,6 +970,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_General_Ragdoll;
     private readonly InputAction m_General_Attack;
     private readonly InputAction m_General_ChargeAttack;
+    private readonly InputAction m_General_Run;
     /// <summary>
     /// Provides access to input actions defined in input action map "General".
     /// </summary>
@@ -962,6 +1006,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "General/ChargeAttack".
         /// </summary>
         public InputAction @ChargeAttack => m_Wrapper.m_General_ChargeAttack;
+        /// <summary>
+        /// Provides access to the underlying input action "General/Run".
+        /// </summary>
+        public InputAction @Run => m_Wrapper.m_General_Run;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1006,6 +1054,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ChargeAttack.started += instance.OnChargeAttack;
             @ChargeAttack.performed += instance.OnChargeAttack;
             @ChargeAttack.canceled += instance.OnChargeAttack;
+            @Run.started += instance.OnRun;
+            @Run.performed += instance.OnRun;
+            @Run.canceled += instance.OnRun;
         }
 
         /// <summary>
@@ -1035,6 +1086,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ChargeAttack.started -= instance.OnChargeAttack;
             @ChargeAttack.performed -= instance.OnChargeAttack;
             @ChargeAttack.canceled -= instance.OnChargeAttack;
+            @Run.started -= instance.OnRun;
+            @Run.performed -= instance.OnRun;
+            @Run.canceled -= instance.OnRun;
         }
 
         /// <summary>
@@ -1316,6 +1370,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnChargeAttack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Run" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRun(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

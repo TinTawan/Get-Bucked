@@ -442,9 +442,11 @@ MonoBehaviour:
   tSphereCheckRadius: 0.1
   tSphereCheckDist: 0.06
   stabiliserRestoreDuration: 1.5
-  moveThreshold: 0.25
-  moveSpeed: 575
+  stabiliserRestoreMoveThreshold: 0.25
   jumpForce: 225
+  moveSpeed: 575
+  runSpeedMult: 1.75
+  fovDeltaSpeed: 0.1
   ragdoll: 0
   slerpDriveMax: 4000
   slerpDriveMin: 75
@@ -1466,8 +1468,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298269364}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06496309, y: 1.7190737e-15, z: 5.10849e-16, w: 0.9978877}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.06496309, y: 0, z: 0, w: 0.9978877}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00000023841858}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8782,8 +8784,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852735434}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12218326, y: -3.6483657e-16, z: 8.605185e-17, w: 0.9925076}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.122183256, y: 0, z: 0, w: 0.9925076}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00000023841858}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9235,8 +9237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911614277}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.122183256, y: 0.000000029579036, z: -0.0000000036413448,
-    w: 0.9925076}
+  m_LocalRotation: {x: 0.122183256, y: 0, z: 0, w: 0.9925076}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
