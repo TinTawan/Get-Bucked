@@ -146,15 +146,19 @@ public class PlayerMovement : MonoBehaviour
 
     void Stamina()
     {
+        //if player holds sprint and has enough stamina (plus isnt standing still)
         if(holdingRun && canRun && moveVect != Vector2.zero)
         {
+            //then they are running if they have enough stamina
             isRunning = true;
             if(stamina < 0)
             {
+                //when stamina runs out, they cant run anymore
                 canRun = false;
             }
             else
             {
+                //use sprint up
                 stamina -= Time.deltaTime;
             }
         }
@@ -162,14 +166,17 @@ public class PlayerMovement : MonoBehaviour
         {
             isRunning = false;
         }
+        //if player isnt holding sprint or is out of stamina (or is standing still)
         if (!holdingRun || !canRun || moveVect == Vector2.zero)
         {
             if (stamina < maxStamina)
             {
-                stamina += Time.deltaTime;
+                //regen sprint faster than it is used up
+                stamina += Time.deltaTime * 1.25f;
             }
             else
             {
+                //stamina has regened so player can sprint again
                 canRun = true;
             }
         }
