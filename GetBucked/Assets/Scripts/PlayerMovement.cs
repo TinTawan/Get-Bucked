@@ -176,18 +176,18 @@ public class PlayerMovement : MonoBehaviour
         playerControls.General.Disable();
     }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
-        if(stabiliser != null)
+        if (stabiliser != null)
         {
-            Vector3 sphereCastTop = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_bottom, stabiliser.transform.position.z);
-            Gizmos.DrawWireSphere(sphereCastTop, sphereCheckRadius_bottom);
-
-            Vector3 sphereCastBottom = new(stabiliser.transform.position.x, stabiliser.transform.position.y - sphereCheckDist_top, stabiliser.transform.position.z);
+            Vector3 sphereCastTop = new(stabiliser.transform.position.x, stabiliser.transform.position.y - tSphereCheckDist, stabiliser.transform.position.z);
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(sphereCastBottom, sphereCheckRadius_top);
-        }
-        
+            Gizmos.DrawWireSphere(sphereCastTop, tSphereCheckRadius);
 
-    }*/
+            Vector3 sphereCastBottom = new(stabiliser.transform.position.x, stabiliser.transform.position.y - bSphereCheckDist, stabiliser.transform.position.z);
+            Gizmos.DrawWireSphere(sphereCastBottom, bSphereCheckRadius);
+        }
+
+
+    }
 }
