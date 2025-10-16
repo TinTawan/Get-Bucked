@@ -447,6 +447,7 @@ MonoBehaviour:
   moveSpeed: 575
   runSpeedMult: 1.75
   fovDeltaSpeed: 0.1
+  maxStamina: 3
   ragdoll: 0
   slerpDriveMax: 4000
   slerpDriveMin: 75

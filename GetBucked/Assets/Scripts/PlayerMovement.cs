@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
-using UnityEditor.ShaderKeywordFilter;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -27,8 +26,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce = 1f;
     [SerializeField] float moveSpeed = 1f, runSpeedMult = 0.5f, fovDeltaSpeed = 1f;
     float initMoveSpeed, initFov, runFov;
-    bool isRunning;
+    bool holdingRun, canRun, isRunning;
     Coroutine moveFOVCoroutine, runFOVCoroutine;
+    [SerializeField] float maxStamina = 5f;
+    float stamina;
 
     [Header("Joints")]
     [SerializeField] bool ragdoll = false;
@@ -49,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         initMoveSpeed = moveSpeed;
         initFov = cineCam.m_Lens.FieldOfView;
         runFov = initFov + 10;
+        stamina = maxStamina;
     }
 
     private void OnEnable()
@@ -57,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         playerControls.General.Enable();
 
         playerControls.General.Move.performed += Move_performed;
-        playerControls.General.Run.started += Run_started;
+        playerControls.General.Run.performed += Run_performed;
         playerControls.General.Run.canceled += Run_cancelled;
         playerControls.General.Jump.performed += Jump_performed;
 
@@ -87,33 +89,30 @@ public class PlayerMovement : MonoBehaviour
             moveVect = ctx.ReadValue<Vector2>();
         }
     }
-    private void Run_started(InputAction.CallbackContext ctx)
+    private void Run_performed(InputAction.CallbackContext ctx)
     {
-        if (moveVect != Vector2.zero)
-        {
-            isRunning = true;
-        }
-
+        holdingRun = true;
     }
     private void Run_cancelled(InputAction.CallbackContext ctx)
     {
-        if (moveVect != Vector2.zero)
-        {
-            isRunning = false;
-        }
+        holdingRun = false;
     }
 
     void FOVChange()
     {
-        if (isRunning)
+        if (holdingRun && canRun)
         {
-            runFOVCoroutine = StartCoroutine(RunFOV(runFov));
-            if (moveFOVCoroutine != null)
+            if (moveVect != Vector2.zero)
             {
-                StopCoroutine(moveFOVCoroutine);
+                runFOVCoroutine = StartCoroutine(RunFOV(runFov));
+                if (moveFOVCoroutine != null)
+                {
+                    StopCoroutine(moveFOVCoroutine);
+                }
             }
+            
         }
-        else
+        if(!holdingRun || !canRun || moveVect == Vector2.zero)
         {
             moveFOVCoroutine = StartCoroutine(WalkFOV(initFov));
             if (runFOVCoroutine != null)
@@ -123,7 +122,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-
     IEnumerator RunFOV(float newFOV)
     {
         while (cineCam.m_Lens.FieldOfView < newFOV)
@@ -146,10 +144,42 @@ public class PlayerMovement : MonoBehaviour
         cineCam.m_Lens.FieldOfView = newFOV;
     }
 
+    void Stamina()
+    {
+        if(holdingRun && canRun && moveVect != Vector2.zero)
+        {
+            isRunning = true;
+            if(stamina < 0)
+            {
+                canRun = false;
+            }
+            else
+            {
+                stamina -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            isRunning = false;
+        }
+        if (!holdingRun || !canRun || moveVect == Vector2.zero)
+        {
+            if (stamina < maxStamina)
+            {
+                stamina += Time.deltaTime;
+            }
+            else
+            {
+                canRun = true;
+            }
+        }
+
+    }
+
     private void Update()
     {
         FOVChange();
-
+        Stamina();
     }
     private void FixedUpdate()
     {
