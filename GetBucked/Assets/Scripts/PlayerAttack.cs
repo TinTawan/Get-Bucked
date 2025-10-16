@@ -194,6 +194,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnDisable()
     {
+        playerControls.General.Attack.performed -= Attack_performed;
+        playerControls.General.ChargeAttack.started -= ctx => chargeLevel = 1f;
+        playerControls.General.ChargeAttack.performed -= ChargeAttack_performed;
+        playerControls.General.ChargeAttack.canceled -= ChargeAttack_canceled;
+
         playerControls.Disable();
     }
 }

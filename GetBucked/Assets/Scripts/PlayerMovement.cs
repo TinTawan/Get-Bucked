@@ -326,6 +326,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
+        playerControls.General.Move.performed -= Move_performed;
+        playerControls.General.Run.performed -= Run_performed;
+        playerControls.General.Run.canceled -= Run_cancelled;
+        playerControls.General.Jump.performed -= Jump_performed;
+        playerControls.General.Ragdoll.performed -= Ragdoll_performed;
+
         playerControls.General.Disable();
     }
 
