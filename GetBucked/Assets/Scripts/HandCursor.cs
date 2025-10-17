@@ -11,14 +11,17 @@ public class HandCursor : MonoBehaviour
     Vector2 mousePos;
     Vector3 handPos;
 
+    bool isClicking;
 
     void OnEnable()
     {
         playerControls = new();
         playerControls.UI.Enable();
 
-
         playerControls.UI.Point.performed += Point_performed;
+        playerControls.UI.Click.performed += ctx => isClicking = true;
+        playerControls.UI.Click.canceled += ctx => isClicking = false;
+
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
@@ -35,10 +38,21 @@ public class HandCursor : MonoBehaviour
         transform.position = handPos;
     }
 
+    public bool GetIsClicking()
+    {
+        return isClicking;
+    }
+
+    public Vector2 GetMousePos()
+    {
+        return mousePos;
+    }
 
     private void OnDisable()
     {
-        playerControls.UI.Point.performed -= ctx => mousePos = ctx.ReadValue<Vector2>();
+        playerControls.UI.Point.performed -= Point_performed;
+        playerControls.UI.Click.performed -= ctx => isClicking = true;
+        playerControls.UI.Click.canceled -= ctx => isClicking = false;
         playerControls.UI.Disable();
     }
 }
