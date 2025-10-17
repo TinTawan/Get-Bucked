@@ -132,4 +132,9 @@ public class TestEnemy : MonoBehaviour
     {
         return stabiliser;
     }
+
+    private void OnDisable()
+    {
+        PlayerAttack.OnPlayerAttack -= PlayerAttack_OnPlayerAttack;
+    }
 }
