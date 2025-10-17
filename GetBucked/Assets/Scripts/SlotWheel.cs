@@ -22,32 +22,6 @@ public class SlotWheel : MonoBehaviour
 
     private void FixedUpdate()
     {
-        /*if (spinFinished)
-        {
-            wheel1Rotation = wheel1rb.transform.rotation.x;
-            float wheel1AngVel = Mathf.Abs(wheel1rb.angularVelocity.x);
-            if (wheel1AngVel < finalAngularVelocityThreshold)
-            {
-                Quaternion targetRot = Quaternion.Euler(TargetWheelAngle(wheel1rb), 0f, 0f);
-                wheel1rb.MoveRotation(targetRot);
-            }
-            else
-            {
-                Debug.Log(wheel1AngVel);
-            }
-        }
-        if (isSpinning)
-        {
-            if (!wheelSnapping && wheel1rb.angularVelocity.magnitude < finalAngularVelocityThreshold)
-            {
-                Debug.Log("snap");
-                wheelSnapping = true;
-                StartCoroutine(SnapToFace(wheel1rb));
-            }
-        }*/
-
-        //Debug.Log($"AngVel magniture: {wheel1rb.angularVelocity.magnitude}");
-
         SnapWheelFaces();
     }
 
@@ -65,7 +39,7 @@ public class SlotWheel : MonoBehaviour
 
     IEnumerator SetDrag()
     {
-        yield return new WaitForSeconds(Random.Range(1, 5));
+        yield return new WaitForSeconds(Random.Range(1, 3));
         wheel1rb.angularDrag = maxDrag;
         yield return new WaitForSeconds(.5f);
         wheel2rb.angularDrag = maxDrag;
@@ -114,7 +88,6 @@ public class SlotWheel : MonoBehaviour
         // Ensure it lands perfectly
         rb.MoveRotation(targetRot);
         rb.angularVelocity = Vector3.zero;
-        //isSpinning = false;
 
     }
 
@@ -124,19 +97,16 @@ public class SlotWheel : MonoBehaviour
         {
             if (!wheel1Snapping && wheel1rb.angularVelocity.magnitude < finalAngularVelocityThreshold)
             {
-                //Debug.Log("snap");
                 wheel1Snapping = true;
                 StartCoroutine(SnapToFace(wheel1rb));
             }
             if (!wheel2Snapping && wheel2rb.angularVelocity.magnitude < finalAngularVelocityThreshold)
             {
-                //Debug.Log("snap");
                 wheel2Snapping = true;
                 StartCoroutine(SnapToFace(wheel2rb));
             }
             if (!wheel3Snapping && wheel3rb.angularVelocity.magnitude < finalAngularVelocityThreshold)
             {
-                //Debug.Log("snap");
                 wheel3Snapping = true;
                 StartCoroutine(SnapToFace(wheel3rb));
             }
