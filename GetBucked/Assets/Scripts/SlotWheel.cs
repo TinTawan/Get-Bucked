@@ -138,13 +138,19 @@ public class SlotWheel : MonoBehaviour
                 Vector3 grabSpherePos = new(grabSphere.transform.position.x, hand.transform.position.y, grabSphere.transform.position.z);
                 //grabSphere.transform.position = grabSpherePos;
                 Rigidbody rb = grabSphere.GetComponent<Rigidbody>();
+
+                //Vector3 pos = Camera.main.WorldToScreenPoint(hand.transform.position);
+                //pos.x = grabSphere.transform.position.x;
+                //pos.z = grabSphere.transform.position.z;
+
                 rb.MovePosition(grabSpherePos);
 
-                if(grabSpherePos.y < 1.7f)
+                    
+                handlePulled = true;
+                /*if(grabSpherePos.y < 1.7f)
                 {
-                    handlePulled = true;
 
-                }
+                }*/
             }
         }
         else
@@ -169,6 +175,12 @@ public class SlotWheel : MonoBehaviour
 
             //lever.transform.rotation = Quaternion.FromToRotation(initLeverRotation, leverRotateTo);
             //Mathf.Clamp(lever.transform.rotation.x, -6f, -70f);
+
+            Vector3 a = Camera.main.ScreenToWorldPoint(hand.transform.position);
+            lever.transform.rotation = Quaternion.Euler(a.y, 0f, 0f);
+
+            //lever.transform.LookAt(grabSpherePos, transform.up);
+            //lever.transform.rotation = Quaternion.rot
         }
     }
 
