@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 234763183}
   - component: {fileID: 234763185}
   - component: {fileID: 234763184}
+  - component: {fileID: 234763186}
   m_Layer: 5
   m_Name: cursor1
   m_TagString: Untagged
@@ -197,6 +198,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234763182}
   m_CullTransparentMesh: 1
+--- !u!114 &234763186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234763182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c651506c41e91d418ace0209552f43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayMaxDist: 50
+  diceLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &239591972
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +653,7 @@ GameObject:
   - component: {fileID: 849458706}
   - component: {fileID: 849458705}
   - component: {fileID: 849458704}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: d4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -847,7 +864,7 @@ GameObject:
   - component: {fileID: 1715052853}
   - component: {fileID: 1715052852}
   - component: {fileID: 1715052851}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: d6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
